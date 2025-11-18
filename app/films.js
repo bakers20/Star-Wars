@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import GenericListScreen from "./GenericListScreen";
 
 export default function FilmsScreen() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text style={{ fontSize: 20 }}>Films Screen</Text>
-    </View>
+    <GenericListScreen
+      apiUrl="https://www.swapi.tech/api/films"
+      titleKey="title"
+    />
   );
 }
