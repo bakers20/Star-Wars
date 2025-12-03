@@ -3,6 +3,9 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View }
 import { Swipeable } from "react-native-gesture-handler";
 import TextModal from "../components/TextModal";
 
+// Import Reanimated
+import Animated, { SlideInLeft, SlideOutRight } from "react-native-reanimated";
+
 export default function GenericListScreen({ apiUrl, titleKey }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,22 +50,24 @@ export default function GenericListScreen({ apiUrl, titleKey }) {
         data={data}
         keyExtractor={(item) => item.uid || item.url}
         renderItem={({ item }) => (
-          <Swipeable
-            renderRightActions={() => (
-              <TouchableOpacity
-                style={styles.swipeAction}
-                onPress={() => handleSwipe(item)}
-              >
-                <Text style={styles.swipeText}>Show</Text>
-              </TouchableOpacity>
-            )}
-          >
-            <View style={styles.item}>
-              <Text style={styles.itemText}>
-                {item[titleKey] || item.properties?.[titleKey] || "No name"}
-              </Text>
-            </View>
-          </Swipeable>
+          <Animated.View entering={SlideInLeft} exiting={SlideOutRight}>
+            <Swipeable
+              renderRightActions={() => (
+                <TouchableOpacity
+                  style={styles.swipeAction}
+                  onPress={() => handleSwipe(item)}
+                >
+                  <Text style={styles.swipeText}>Show</Text>
+                </TouchableOpacity>
+              )}
+            >
+              <View style={styles.item}>
+                <Text style={styles.itemText}>
+                  {item[titleKey] || item.properties?.[titleKey] || "No name"}
+                </Text>
+              </View>
+            </Swipeable>
+          </Animated.View>
         )}
       />
     </View>
