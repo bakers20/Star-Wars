@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
+import Animated, { SlideInLeft, SlideOutRight } from "react-native-reanimated";
 import TextModal from "../components/TextModal";
 
-// Import Reanimated
-import Animated, { SlideInLeft, SlideOutRight } from "react-native-reanimated";
-
-export default function GenericListScreen({ apiUrl, titleKey }) {
+export default function GenericListScreen({ apiUrl, titleKey, filter = "" }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,6 +37,12 @@ export default function GenericListScreen({ apiUrl, titleKey }) {
     );
   }
 
+  // Filter the data based on the search text
+  const filteredData = data.filter((item) => {
+    const itemName = item[titleKey] || item.properties?.[titleKey] || "";
+    return itemName.toLowerCase().includes(filter.toLowerCase());
+  });
+
   return (
     <View style={styles.container}>
       <TextModal
@@ -47,7 +51,7 @@ export default function GenericListScreen({ apiUrl, titleKey }) {
         onClose={() => setModalVisible(false)}
       />
       <FlatList
-        data={data}
+        data={filteredData}
         keyExtractor={(item) => item.uid || item.url}
         renderItem={({ item }) => (
           <Animated.View entering={SlideInLeft} exiting={SlideOutRight}>

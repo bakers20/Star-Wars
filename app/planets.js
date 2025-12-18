@@ -22,13 +22,14 @@ export default function PlanetsScreen() {
         }}
       />
 
-      {/* Generic list */}
+      {/* Generic list (NOW FILTERED) */}
       <GenericListScreen
         apiUrl="https://www.swapi.tech/api/planets"
         titleKey="name"
+        filter={searchText}   // ✅ ADDED — this is the key change
       />
 
-      {/* Modal to show submitted text */}
+      {/* Modal remains untouched */}
       <TextModal
         visible={modalVisible}
         text={submittedText}

@@ -22,13 +22,14 @@ export default function FilmsScreen() {
         }}
       />
 
-      {/* Generic list */}
+      {/* Generic list (NOW FILTERED) */}
       <GenericListScreen
         apiUrl="https://www.swapi.tech/api/films"
         titleKey="title"
+        filter={searchText}   // ✅ ADDED — only change
       />
 
-      {/* Modal to show submitted text */}
+      {/* Modal remains untouched */}
       <TextModal
         visible={modalVisible}
         text={submittedText}

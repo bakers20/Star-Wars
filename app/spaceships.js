@@ -22,10 +22,11 @@ export default function SpaceshipsScreen() {
         }}
       />
 
-      {/* Generic list */}
+      {/* Generic list (NOW FILTERED) */}
       <GenericListScreen
         apiUrl="https://www.swapi.tech/api/starships"
         titleKey="name"
+        filter={searchText}
       />
 
       {/* Modal to show submitted text */}
